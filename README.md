@@ -1,3 +1,5 @@
-# jwt-auth-nodejs
+# Postal-Charge-Finder
 
-signup and login jwt auth nodejs
+# Swagger Documentation
+
+https://delivery-charge-api.herokuapp.com/api-docs/
