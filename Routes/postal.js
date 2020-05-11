@@ -12,8 +12,9 @@ const myValidationResult = validationResult.withDefaults({
 });
 Router.post('/',
     [check("array.*.weight","weight is required").not().isEmpty(),
-        check("array.*.sellerPin","seller pincode is required").not().isEmpty(),
-        check("array.*.customerPin","customer pincode is required").not().isEmpty(),
+        check("array.*.sellerPin","seller pincode is invalid").not().isEmpty().isLength({min:6,max:6}),
+        check("array.*.customerPin","customer pincode is invalid").not().isEmpty().isLength({min:6,max:6}),
+        check("array.*.name","name is required").not().isEmpty(),
     ],
     asyncvalidator(async (req,res)=>{
         const errors = myValidationResult(req);
@@ -23,6 +24,7 @@ Router.post('/',
     for(let i=0;i<req.body.array.length;i++)
         {
             const weight = req.body.array[i].weight;
+            const name = req.body.array[i].name;
             const seller = req.body.array[i].sellerPin.toString();
             const customer = req.body.array[i].customerPin.toString();
             let price = 0, cityS = seller[0] + seller[1], zoneS = seller[0];
@@ -102,6 +104,7 @@ Router.post('/',
             const total = price + tax + fuel + state;
             sum=sum+total;
             arrays.push({
+                name:name,
                 DeliveryCharge: price.toString(),
                 Tax: tax.toString(),
                 Fuel: fuel.toString(),
