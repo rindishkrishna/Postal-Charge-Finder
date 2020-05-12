@@ -21,6 +21,7 @@ Router.post('/',
     if(!errors.isEmpty()) return res.status(422).json(errors.array() );
     let sum=0;
     let arrays=[];
+    let metro = [56, 22, 60, 41, 50];
     for(let i=0;i<req.body.array.length;i++)
         {
             const weight = req.body.array[i].weight;
@@ -29,7 +30,7 @@ Router.post('/',
             const customer = req.body.array[i].customerPin.toString();
             let price = 0, cityS = seller[0] + seller[1], zoneS = seller[0];
             let cityC = customer[0] + customer[1], zoneC = customer[0];
-            let metro = [56, 22, 60, 41, 50];
+
 
             if (zoneC == 1 || zoneC == 2) {
                 zoneC = "N"
@@ -58,43 +59,88 @@ Router.post('/',
 
             if (weight <= 500) {
 
-                for (let i = 0; i < metro.length; i++) {
-                    if (metro[i] == cityC && metro[i] == cityS) {
-                        price = 48;
+                let f1=0 ,f2=0;
+                const n=metro.length;
+                if(!price){
+                    for (let j = 0; j <n; j++) {
+
+                        if (metro[j] == cityC) {
+                            f1=1;
+
+                        }
+                        if (metro[j] == cityS) {
+                            f2=1;
+
+                        }
+                        if (f1===1 && f2===1) {
+                            price=48;
+                        }
+
+
                     }
+
                 }
-                if (cityC === cityS) {
+                if (cityC === cityS && !price) {
                     price = 30;
-                } else if (zoneC === zoneS) {
+                } else if (zoneC === zoneS && !price) {
                     price = 38;
-                } else {
+                } else if(!price) {
                     price = 68;
                 }
 
             } else if (weight > 500 && weight <= 5000) {
-                for (let i = 0; i < metro.length; i++) {
-                    if (metro[i] == cityC && metro[i] == cityS) {
-                        price = 46;
+                let f1=0 ,f2=0;
+                const n=metro.length;
+                if(!price){
+                    for (let j = 0; j <n; j++) {
+
+                        if (metro[j] == cityC) {
+                            f1=1;
+
+                        }
+                        if (metro[j] == cityS) {
+                            f2=1;
+
+                        }
+                        if (f1===1 && f2===1) {
+                            price=46;
+                        }
+
+
                     }
+
                 }
-                if (cityC === cityS) {
+                if (cityC === cityS && !price) {
                     price = 28;
-                } else if (zoneC === zoneS) {
+                } else if (zoneC === zoneS && !price) {
                     price = 37;
-                } else {
+                } else if(!price) {
                     price = 65;
                 }
             } else {
-                for (let i = 0; i < metro.length; i++) {
-                    if (metro[i] == cityC && metro[i] == cityS) {
-                        price = 78;
-                    }
+                let f1=0 ,f2=0;
+                const n=metro.length;
+                if(!price){
+                for (let j = 0; j <n; j++) {
+                     if (metro[j] == cityC) {
+                         f1=1;
+
+                     }
+                     if (metro[j] == cityS) {
+                          f2=1;
+
+                     }
+                     if (f1===1 && f2===1) {
+                         price=78;
+                     }
                 }
-                if (cityC === cityS) {
+
+                }
+                if (cityC === cityS && !price) {
                     price = 48;
-                } else if (zoneC === zoneS) {
+                } else if (zoneC === zoneS && !price) {
                     price = 62;
-                } else {
+                } else if(!price) {
                     price = 115;
                 }
             }
